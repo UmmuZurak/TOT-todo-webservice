@@ -22,6 +22,14 @@ mongoose
     console.log(err);
   });
 
+  
+
+app.get("/", (req, res) => {
+  return res.status(200).json({
+    message: "Welcome to the todo API.",
+  });
+});
+
 ///get all todos
 app.get("/todos", async (req, res) => {
   const todoModel = await TodoModel.find({});
