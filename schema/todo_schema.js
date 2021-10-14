@@ -17,9 +17,10 @@ const todoSchema = Schema({
   status: {
     type: Boolean,
     required: true,
+    default: false,
   },
 });
 
-const todoModel = model("todo", todoSchema);
+const TodoModel = model("todo", todoSchema);
 
-module.exports = todoModel;
+module.exports = TodoModel;

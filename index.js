@@ -6,12 +6,14 @@ const TodoModel = require("./schema/todo_schema");
 const app = express();
 const port = 3030;
 
+app.use(express.json());
+
 const db = process.env.DB_URL;
 
 mongoose
   .connect(db, {
     useNewUrlParser: true,
-    // useUnified: true,
+    useUnifiedTopology: true,
   })
   .then(() => {
     console.log("mongodb connected");
