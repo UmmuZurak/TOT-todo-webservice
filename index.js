@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const TodoModel = require("./schema/todo_schema");
 
 const app = express();
-const port = 3030;
+const port = 3030 || process.env.PORT;
 
 app.use(express.json());
 
