@@ -1,12 +1,14 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const TodoModel = require("./schema/todo_schema");
 
 const app = express();
 const port = 3000 || process.env.PORT;
 
 app.use(express.json());
+app.use(cors());
 
 const db = process.env.DB_URL;
 
@@ -22,8 +24,6 @@ mongoose
     console.log(err);
   });
 
-  
-
 app.get("/", (req, res) => {
   return res.status(200).json({
     message: "Welcome to the todo API.",
@@ -33,6 +33,25 @@ app.get("/", (req, res) => {
 ///get all todos
 app.get("/todos", async (req, res) => {
   const todoModel = await TodoModel.find({});
+  if (todoModel) {
+    return res.status(200).json({
+      status: true,
+      message: "Todos fetched successfully",
+      data: todoModel,
+    });
+  } else {
+    return res.status(400).json({
+      status: false,
+      message: "Todos not found",
+    });
+  }
+});
+
+//get all todos by status
+app.get("/todos/:status", async (req, res) => {
+  const { status } = req.params;
+
+  const todoModel = await TodoModel.find({}).where("status").equals(status);
   if (todoModel) {
     return res.status(200).json({
       status: true,
